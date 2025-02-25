@@ -2,11 +2,17 @@ package circus;
 
 import circus.animal.Animal;
 import circus.animal.Duck;
+import circus.animal.Elephant;
 import circus.animal.Parrot;
 import circus.animal.Tiger;
 import circus.stuff.Cannon;
 import circus.stuff.Equipment;
 import circus.stuff.Ladder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static circus.animal.Animal.AnimalNameComparator;
 
 public class Circus {
     private static Animal[] animals = {
@@ -41,8 +47,35 @@ public class Circus {
     }
 
     public static void main(String[] args) {
-        makeAnimalsTalk();
-        System.out.println("Total value of animals " + calculateAssetValue(animals));
-        System.out.println("Total value of equipments " + calculateAssetValue(equipments));
+        System.out.println("Animal length " + animals.length);
+
+        ArrayList<Animal> animalList = new ArrayList<>(Arrays.asList(animals));
+
+        Parrot perry = new Parrot("Perry");
+        animalList.add(perry);
+        animalList.add(new Elephant("Brute")); // we don't have object reference for this --> no pointer
+        Duck andy = new Duck("Andy");
+        animalList.add(andy);
+        // substitutability allows to add specific animals to "Animal" array list
+        System.out.println("Before sorting:");
+        printAnimals(animalList);
+
+        System.out.println("Size of array List: " + animalList.size());
+
+        System.out.println("Perry is in position " + animalList.indexOf(perry));
+        animalList.sort(AnimalNameComparator);
+
+        System.out.println("After sorting:");
+        printAnimals(animalList);
+
+        //        makeAnimalsTalk();
+        //        System.out.println("Total value of animals " + calculateAssetValue(animals));
+        //        System.out.println("Total value of equipments " + calculateAssetValue(equipments));
+    }
+
+    private static void printAnimals(ArrayList<Animal> animalList) {
+        for(Animal a : animalList) {
+            System.out.println(a);
+        }
     }
 }
